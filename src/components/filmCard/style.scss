@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+
+@import url('https://fonts.googleapis.com/css?family=Fredericka+the+Great');
+@import '../../style/variable';
+.col-md-5,
+.description {
+  padding: 0;
+}
+
+.description {
+  font-family: 'Fredericka the Great', cursive;
+  text-align: center;
+}
+
+.cardHeader,
+.metadata {
+  background: none;
+  padding: 0;
+  position: relative;
+  border-style: none;
+}
+
+.metadata {
+  font-size: 16px;
+  i,
+  p {
+    float: left;
+  }
+  p {
+    margin-top: 0;
+    margin-left: 10px;
+  }
+  i {
+    color: #ff9d00;
+    margin-top: 5px;
+    margin-left: 1px;
+  }
+}
+
+.cardTitle {
+  font-weight: 600;
+  color: $ligth-font-color;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 15%;
+  margin-left: 1.125rem;
+}
+.cardBody {
+  position: relative;
+  color: $dark-font-color;
+  background-color: white;
+  .cardText {
+    font-weight: 600;
+    line-height: 30px;
+  }
+}
+
+.card {
+  box-shadow: 0 2px 8px 0 rgba(202, 241, 198, 0.5),
+    0 3px 20px 0 rgba(202, 241, 198, 0.4);
+  &:hover {
+    box-shadow: 0 8px 18px 0 rgba(202, 241, 198, 0.5),
+      0 8px 8px 0 rgba(202, 241, 198, 0.4);
+  }
+}
+
+.card {
+  border-radius: 8pt;
+  border-style: none;
+  overflow: hidden;
+  transform: scale(0.8);
+}

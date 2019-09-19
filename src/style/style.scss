@@ -1,0 +1,42 @@
+@import '_variable';
+
+html,
+body {
+  min-height: 100vh;
+  height: 100vh;
+  color: $ligth-font-color !important;
+  background-color: $background-color;
+}
+
+.page-content {
+  width: calc(100% - $navbar-width);
+  margin-left: $navbar-width;
+  transition: all 0.4s;
+}
+
+a {
+  color: $ligth-font-color;
+
+  &:hover {
+    color: $ligth-secondary-font-color;
+  }
+}
+
+.main {
+  margin-left: $navbar-width;
+
+  article {
+    height: 100vh;
+    display: none;
+
+    &.active {
+      display: inline-block;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  body .main {
+    margin-left: $small-navbar-width;
+  }
+}

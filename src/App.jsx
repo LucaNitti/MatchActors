@@ -1,0 +1,167 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable react/jsx-closing-bracket-location */
+import React, { Component } from 'react';
+import { hot } from 'react-hot-loader/root';
+import 'bootstrap/dist/css/bootstrap.css';
+import './style/style.scss';
+import axios from 'axios';
+import AsyncPaginate from 'react-select-async-paginate';
+import { mergeFilm } from './utility/function';
+import FilmCard from './components/filmCard';
+
+const apiKey = '199df12205e314f03bf242844484204b';
+const searchPersonUrl = 'https://api.themoviedb.org/3/search/person';
+const personUrl = 'https://api.themoviedb.org/3/person/';
+
+const defaultReturn = {
+  options: [],
+  hasMore: false,
+  additional: {
+    page: 1,
+  },
+};
+
+const formatResponse = response => {
+  const { status, data } = response;
+  if (status !== 200) return defaultReturn;
+  const hasMore = data.page !== data.total_pages;
+  const options = data.results.map(actor => {
+    const { id, popularity, gender, profile_path, name } = actor;
+    return {
+      value: id,
+      info: { id, popularity, gender, profile_path, name },
+      label: `${name} (${actor.known_for_department})`,
+    };
+  });
+  return {
+    options,
+    hasMore,
+    additional: {
+      page: data.page + 1,
+    },
+  };
+};
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      actor1: [],
+      actor2: [],
+      filmsInCommon: [],
+    };
+  }
+
+  searchActors = (inputValue, loadedOptions, { page }) => {
+    if (!inputValue || inputValue.length < 3) return defaultReturn;
+    const url = `${searchPersonUrl}?api_key=${apiKey}&query=${inputValue}&page=${page}`;
+    return axios
+      .get(url)
+      .then(formatResponse)
+      .catch(function(error) {
+        console.log(error);
+        return defaultReturn;
+      });
+  };
+
+  handleSearchMovie = () => {
+    const { actor1, actor2 } = this.state;
+    const urlActor1 = `${personUrl}${actor1.value}/combined_credits?api_key=${apiKey}`;
+    const urlActor2 = `${personUrl}${actor2.value}/combined_credits?api_key=${apiKey}`;
+    axios
+      .all([axios.get(urlActor1), axios.get(urlActor2)])
+      .then(
+        axios.spread((actor1Response, actor2Response) => {
+          const actor1ResponseData = { ...actor1Response.data, ...actor1.info };
+          const actor2ResponseData = { ...actor2Response.data, ...actor2.info };
+          const filmsInCommon = mergeFilm(
+            actor1ResponseData,
+            actor2ResponseData,
+          );
+          const tmpState = { ...this.state };
+          tmpState.filmsInCommon = filmsInCommon;
+          console.log(filmsInCommon);
+          this.setState(tmpState);
+        }),
+      )
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
+
+  handleActor1 = value => {
+    const tmpState = { ...this.state };
+    tmpState.actor1 = value;
+    this.setState(tmpState);
+  };
+
+  handleActor2 = value => {
+    const tmpState = { ...this.state };
+    tmpState.actor2 = value;
+    this.setState(tmpState);
+  };
+
+  render() {
+    const { actor1, actor2, filmsInCommon } = this.state;
+    const listFilm = filmsInCommon.map(x => (
+      <FilmCard
+        key={x.id}
+        id={x.id}
+        title={x.title}
+        poster_path={x.poster_path}
+        popularity={x.popularity}
+        original_language={x.original_language}
+        release_date={x.release_date}
+        overview={x.overview}
+        backdrop_path={x.backdrop_path}
+      />
+    ));
+    return (
+      <div className="container">
+        <div className="main p-3">
+          <div className="row">
+            <div className="col-6">
+              <span>First actor</span>
+              <AsyncPaginate
+                loadOptions={this.searchActors}
+                defaultOptions={false}
+                value={actor1}
+                onChange={this.handleActor1}
+                additional={{
+                  page: 1,
+                }}
+              />
+            </div>
+            <div className="col-6">
+              <span>Second actor</span>
+              <AsyncPaginate
+                loadOptions={this.searchActors}
+                defaultOptions={false}
+                value={actor2}
+                onChange={this.handleActor2}
+                additional={{
+                  page: 1,
+                }}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <button
+                className="btn btn-primary"
+                type="button"
+                onClick={this.handleSearchMovie}
+              >
+                Cerca film
+              </button>
+            </div>
+          </div>
+
+          {listFilm}
+        </div>
+      </div>
+    );
+  }
+}
+
+export default hot(App);
