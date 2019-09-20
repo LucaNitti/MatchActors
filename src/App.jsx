@@ -3,9 +3,9 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader/root';
 import 'bootstrap/dist/css/bootstrap.css';
-import './style/style.scss';
 import axios from 'axios';
 import AsyncPaginate from 'react-select-async-paginate';
+import styles from './style/style.scss';
 import { mergeFilm } from './utility/function';
 import FilmCard from './components/filmCard';
 
@@ -24,7 +24,7 @@ const defaultReturn = {
 const formatResponse = response => {
   const { status, data } = response;
   if (status !== 200) return defaultReturn;
-  const hasMore = data.page !== data.total_pages;
+  const hasMore = data.page !== data.total_pages && data.total_pages !== 0;
   const options = data.results.map(actor => {
     const { id, popularity, gender, profile_path, name } = actor;
     return {
@@ -103,6 +103,7 @@ class App extends Component {
 
   render() {
     const { actor1, actor2, filmsInCommon } = this.state;
+    console.log(filmsInCommon);
     const listFilm = filmsInCommon.map(x => (
       <FilmCard
         key={x.id}
@@ -114,11 +115,12 @@ class App extends Component {
         release_date={x.release_date}
         overview={x.overview}
         backdrop_path={x.backdrop_path}
+        media_type={x.media_type}
       />
     ));
     return (
-      <div className="container">
-        <div className="main p-3">
+      <div className="container-fluid">
+        <div className={'main p-3 ' + styles.main}>
           <div className="row">
             <div className="col-6">
               <span>First actor</span>
@@ -146,9 +148,9 @@ class App extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-12">
+            <div className="col-12 mt-4 text-center">
               <button
-                className="btn btn-primary"
+                className={'btn btn-primary ' + styles.btnPrimary}
                 type="button"
                 onClick={this.handleSearchMovie}
               >
@@ -156,8 +158,14 @@ class App extends Component {
               </button>
             </div>
           </div>
-
           {listFilm}
+        </div>
+        <div className={styles.footer}>
+          <img
+            className={styles.footerImg}
+            alt="powered by The movie DB"
+            src="https://www.themoviedb.org/assets/2/v4/logos/powered-by-rectangle-green-dcada16968ed648d5eb3b36bbcfdd8cdf804f723dcca775c8f2bf4cea025aad6.svg"
+          ></img>
         </div>
       </div>
     );

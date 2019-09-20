@@ -7,13 +7,6 @@ body {
   color: $ligth-font-color !important;
   background-color: $background-color;
 }
-
-.page-content {
-  width: calc(100% - $navbar-width);
-  margin-left: $navbar-width;
-  transition: all 0.4s;
-}
-
 a {
   color: $ligth-font-color;
 
@@ -22,21 +15,37 @@ a {
   }
 }
 
-.main {
-  margin-left: $navbar-width;
-
-  article {
-    height: 100vh;
-    display: none;
-
-    &.active {
-      display: inline-block;
-    }
-  }
-}
-
 @media screen and (max-width: 768px) {
   body .main {
     margin-left: $small-navbar-width;
+  }
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 70px;
+  line-height: 60px;
+  background-color: $background-color;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+}
+.main {
+  height: calc(100vh - 70px);
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.footerImg {
+  height: 100%;
+}
+.btnPrimary {
+  background-color: $primary-color;
+  color: $ligth-secondary-font-color;
+  border: $ligth-secondary-font-color;
+  &:hover {
+    background-color: $ligth-secondary-font-color;
+    color: $primary-color;
+    border: $primary-color;
   }
 }
