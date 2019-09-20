@@ -13,6 +13,7 @@ const FilmCard = props => {
     original_language,
     release_date,
     overview,
+    original_title,
     id,
   } = props;
   return (
@@ -20,7 +21,10 @@ const FilmCard = props => {
       <div className="col-5 mx-auto">
         <div className={styles.card + ' card'}>
           <div className={styles.cardHeader + ' card-header'}>
-            <h1 className={styles.cardTitle + ' card-title'}>{title}</h1>
+            <h1 className={styles.cardTitle + ' card-title'}>
+              {original_title}
+              <span className={styles.subTitle}>{title}</span>
+            </h1>
             <img
               className={styles.cardImg + ' card-img'}
               src={`https://image.tmdb.org/t/p/w500${backdrop_path}`}
@@ -53,6 +57,7 @@ FilmCard.propTypes = {
   poster_path: PropTypes.string,
   popularity: PropTypes.number,
   title: PropTypes.string,
+  original_title: PropTypes.string,
   original_language: PropTypes.string,
   release_date: PropTypes.string,
   overview: PropTypes.string,

@@ -11,6 +11,7 @@ export interface FilmInterface {
   release_date: string;
   overview: string;
   id: number;
+  original_title: string;
 }
 export class Cast implements FilmInterface {
   media_type: string;
@@ -86,6 +87,7 @@ export class FilmForActorViewModel implements FilmInterface {
   backdrop_path?: string;
   popularity: number;
   title: string;
+  original_title: string;
   original_language: string;
   release_date: string;
   overview: string;
@@ -105,5 +107,6 @@ export class FilmForActorViewModel implements FilmInterface {
     this.overview = film.overview;
     this.actor = new Array();
     this.secondary_actor = new Array();
+    this.original_title = film.original_title;
   }
 }

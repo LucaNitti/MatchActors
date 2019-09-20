@@ -12,6 +12,13 @@ import FilmCard from './components/filmCard';
 const apiKey = '199df12205e314f03bf242844484204b';
 const searchPersonUrl = 'https://api.themoviedb.org/3/search/person';
 const personUrl = 'https://api.themoviedb.org/3/person/';
+const languagesUrl = 'https://api.themoviedb.org/3/configuration/languages';
+
+const defaultLanguage = {
+  iso_639_1: 'xx',
+  english_name: 'No Language',
+  name: 'No Language',
+};
 
 const defaultReturn = {
   options: [],
@@ -49,7 +56,22 @@ class App extends Component {
       actor1: [],
       actor2: [],
       filmsInCommon: [],
+      languages: [],
     };
+  }
+
+  componentDidMount() {
+    const url = `${languagesUrl}?api_key=${apiKey}`;
+    axios
+      .get(url)
+      .then(response => {
+        const { status, data } = response;
+        if (status !== 200) return [];
+        this.setState({ languages: data });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
   searchActors = (inputValue, loadedOptions, { page }) => {
@@ -103,21 +125,30 @@ class App extends Component {
 
   render() {
     const { actor1, actor2, filmsInCommon } = this.state;
-    console.log(filmsInCommon);
-    const listFilm = filmsInCommon.map(x => (
-      <FilmCard
-        key={x.id}
-        id={x.id}
-        title={x.title}
-        poster_path={x.poster_path}
-        popularity={x.popularity}
-        original_language={x.original_language}
-        release_date={x.release_date}
-        overview={x.overview}
-        backdrop_path={x.backdrop_path}
-        media_type={x.media_type}
-      />
-    ));
+    const listFilm = filmsInCommon.map(x => {
+      const { languages } = this.state;
+      const languageObject =
+        languages.find(l => l.iso_639_1 === x.original_language) ||
+        defaultLanguage;
+      const { name, english_name } = languageObject;
+      const language =
+        name === english_name ? name : `${name} (${english_name})`;
+      return (
+        <FilmCard
+          key={x.id}
+          id={x.id}
+          original_title={x.original_title}
+          title={x.title}
+          poster_path={x.poster_path}
+          popularity={x.popularity}
+          original_language={language}
+          release_date={x.release_date}
+          overview={x.overview}
+          backdrop_path={x.backdrop_path}
+          media_type={x.media_type}
+        />
+      );
+    });
     return (
       <div className="container-fluid">
         <div className={'main p-3 ' + styles.main}>
