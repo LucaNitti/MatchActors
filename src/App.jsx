@@ -126,6 +126,8 @@ class App extends Component {
   render() {
     const { actor1, actor2, filmsInCommon } = this.state;
     const listFilm = filmsInCommon.map(x => {
+      const { actor, secondary_actor } = x;
+
       const { languages } = this.state;
       const languageObject =
         languages.find(l => l.iso_639_1 === x.original_language) ||
@@ -153,7 +155,7 @@ class App extends Component {
       <div className="container-fluid">
         <div className={'main p-3 ' + styles.main}>
           <div className="row">
-            <div className="col-6">
+            <div className="col-sm-12 col-md-6">
               <span>First actor</span>
               <AsyncPaginate
                 loadOptions={this.searchActors}
@@ -165,7 +167,7 @@ class App extends Component {
                 }}
               />
             </div>
-            <div className="col-6">
+            <div className="col-sm-12 col-md-6">
               <span>Second actor</span>
               <AsyncPaginate
                 loadOptions={this.searchActors}

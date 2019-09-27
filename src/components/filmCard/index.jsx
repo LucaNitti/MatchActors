@@ -18,7 +18,7 @@ const FilmCard = props => {
   } = props;
   return (
     <div className="row flex-column-reverse flex-md-row">
-      <div className="col-5 mx-auto">
+      <div className="col-sm-12 col-md-5 mx-auto">
         <div className={styles.card + ' card'}>
           <div className={styles.cardHeader + ' card-header'}>
             <h1 className={styles.cardTitle + ' card-title'}>

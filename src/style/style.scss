@@ -15,12 +15,6 @@ a {
   }
 }
 
-@media screen and (max-width: 768px) {
-  body .main {
-    margin-left: $small-navbar-width;
-  }
-}
-
 .footer {
   position: absolute;
   bottom: 0;
