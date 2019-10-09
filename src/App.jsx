@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/jsx-closing-bracket-location */
 import React, { Component } from 'react';

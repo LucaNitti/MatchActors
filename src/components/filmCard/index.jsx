@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -18,23 +20,23 @@ const FilmCard = props => {
         first_actor,
         secondary_actor,
     } = props;
-    let first_actor_role = first_actor.role
+    const first_actor_role = first_actor.role
         .filter(x => x.character !== '')
         .map(x => x.character)
         .join(',');
-    let first_actor_job = first_actor.role
-        .filter(x => x.character === '')
-        .map(x => `${x.job} at ${x.department}`)
-        .join(',');
+    // const first_actor_job = first_actor.role
+    //     .filter(x => x.character === '')
+    //     .map(x => `${x.job} at ${x.department}`)
+    //     .join(',');
 
-    let secondary_actor_role = secondary_actor.role
+    const secondary_actor_role = secondary_actor.role
         .filter(x => x.character !== '')
         .map(x => x.character)
         .join(',');
-    let secondary_actor_job = secondary_actor.role
-        .filter(x => x.character === '')
-        .map(x => `${x.job} at ${x.department}`)
-        .join(',');
+    // const secondary_actor_job = secondary_actor.role
+    //     .filter(x => x.character === '')
+    //     .map(x => `${x.job} at ${x.department}`)
+    //     .join(',');
     return (
         <div id={id} className="">
             <div className={styles.card + ' card'}>
