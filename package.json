@@ -51,7 +51,7 @@
     "private": false,
     "engines": {
         "node": "12.x",
-        "npm": "3.x"
+        "yarn": "1.17.3"
     },
     "dependencies": {
         "@babel/plugin-transform-react-constant-elements": "7.5.0",
