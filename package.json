@@ -8,7 +8,7 @@
         "build": "cross-env NODE_ENV=production webpack",
         "format": "prettier --write 'packages/**/*.js'",
         "test": "jest --watchAll --coverage",
-        "heroku-postbuild": "npm run build"
+        "heroku-postbuild": "cross-env NODE_ENV=production webpack"
     },
     "lint-staged": {
         "*.{js,jsx,scss,css,md}": [
