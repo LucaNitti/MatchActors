@@ -36,36 +36,34 @@ const FilmCard = props => {
         .map(x => `${x.job} at ${x.department}`)
         .join(',');
     return (
-        <div id={id} className="row flex-column-reverse flex-md-row">
-            <div className="col-sm-12 col-md-5 mx-auto">
-                <div className={styles.card + ' card'}>
-                    <div className={styles.cardHeader + ' card-header'}>
-                        <h1 className={styles.cardTitle + ' card-title'}>
-                            {original_title}
-                            <span className={styles.subTitle}>{title}</span>
-                        </h1>
-                        <img className={styles.cardImg + ' card-img'} src={`https://image.tmdb.org/t/p/w500${backdrop_path}`} alt="Backdrop" />
-                    </div>
-                    <div className={styles.cardBody + ' card-body'}>
-                        <div className={styles.container}>
-                            <div className="row">
-                                <span className={styles.metadata}>
-                                    <i className="fa fa-star" aria-hidden="true"></i>
-                                    <p>{popularity}</p>
-                                </span>
-                                <span className={styles.metadata}>{original_language}</span>
-                                <span className={styles.metadata}>{release_date}</span>
-                                <span className={styles.metadata}>{media_type}</span>
-                            </div>
+        <div id={id} className="">
+            <div className={styles.card + ' card'}>
+                <div className={styles.cardHeader + ' card-header'}>
+                    <h1 className={styles.cardTitle + ' card-title'}>
+                        {original_title}
+                        <span className={styles.subTitle}>{title}</span>
+                    </h1>
+                    <img className={styles.cardImg + ' card-img'} src={`https://image.tmdb.org/t/p/w500${backdrop_path}`} alt="Backdrop" />
+                </div>
+                <div className={styles.cardBody + ' card-body'}>
+                    <div className={styles.container}>
+                        <div className="row">
+                            <span className={styles.metadata}>
+                                <i className="fa fa-star" aria-hidden="true"></i>
+                                <p>{popularity}</p>
+                            </span>
+                            <span className={styles.metadata}>{original_language}</span>
+                            <span className={styles.metadata}>{release_date}</span>
+                            <span className={styles.metadata}>{media_type}</span>
                         </div>
-                        <p className={styles.cardText}>{overview}</p>
-                        <p>
-                            {first_actor.name} in {first_actor_role}
-                        </p>
-                        <p>
-                            {secondary_actor.name} in {secondary_actor_role}
-                        </p>
                     </div>
+                    <p className={styles.cardText}>{overview}</p>
+                    <p>
+                        {first_actor.name} in {first_actor_role}
+                    </p>
+                    <p>
+                        {secondary_actor.name} in {secondary_actor_role}
+                    </p>
                 </div>
             </div>
         </div>

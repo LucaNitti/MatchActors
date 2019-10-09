@@ -182,7 +182,7 @@ class App extends Component {
                             </button>
                         </div>
                     </div>
-                    {listFilm}
+                    <div className="row d-flex justify-content-around align-self-stretch">{listFilm}</div>
                 </div>
                 <div className={styles.footer}>
                     <img
