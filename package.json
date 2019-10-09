@@ -50,8 +50,8 @@
     "license": "ISC",
     "private": false,
     "engines": {
-        "node": ">=8",
-        "npm": ">=3"
+        "node": "12.x",
+        "npm": "3.x"
     },
     "dependencies": {
         "@babel/plugin-transform-react-constant-elements": "7.5.0",
