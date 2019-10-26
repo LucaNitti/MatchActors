@@ -54,9 +54,9 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            actor1: [],
-            actor2: [],
-            filmsInCommon: [],
+            actor1: null,
+            actor2: null,
+            filmsInCommon: null,
             languages: [],
         };
     }
@@ -111,42 +111,47 @@ class App extends Component {
     handleActor1 = value => {
         const tmpState = { ...this.state };
         tmpState.actor1 = value;
+        tmpState.filmsInCommon = null;
         this.setState(tmpState);
     };
 
     handleActor2 = value => {
         const tmpState = { ...this.state };
         tmpState.actor2 = value;
+        tmpState.filmsInCommon = null;
         this.setState(tmpState);
     };
 
     render() {
         const { actor1, actor2, filmsInCommon } = this.state;
-        const listFilm = filmsInCommon.map(x => {
-            const { actor, secondary_actor } = x;
+        let listFilm = [];
+        if (actor1 && actor2 && filmsInCommon && filmsInCommon.length === 0) listFilm = [<div key="no_common_film">No film in common</div>];
+        if (filmsInCommon && filmsInCommon.length !== 0)
+            listFilm = filmsInCommon.map(x => {
+                const { actor, secondary_actor } = x;
 
-            const { languages } = this.state;
-            const languageObject = languages.find(l => l.iso_639_1 === x.original_language) || defaultLanguage;
-            const { name, english_name } = languageObject;
-            const language = name === english_name ? name : `${name} (${english_name})`;
-            return (
-                <FilmCard
-                    key={x.id}
-                    id={x.id}
-                    original_title={x.original_title}
-                    title={x.title}
-                    poster_path={x.poster_path}
-                    popularity={x.popularity}
-                    original_language={language}
-                    release_date={x.release_date}
-                    overview={x.overview}
-                    backdrop_path={x.backdrop_path}
-                    media_type={x.media_type}
-                    first_actor={{ name: actor[0].name, role: actor }}
-                    secondary_actor={{ name: secondary_actor[0].name, role: secondary_actor }}
-                />
-            );
-        });
+                const { languages } = this.state;
+                const languageObject = languages.find(l => l.iso_639_1 === x.original_language) || defaultLanguage;
+                const { name, english_name } = languageObject;
+                const language = name === english_name ? name : `${name} (${english_name})`;
+                return (
+                    <FilmCard
+                        key={x.id}
+                        id={x.id}
+                        original_title={x.original_title}
+                        title={x.title}
+                        poster_path={x.poster_path}
+                        popularity={x.popularity}
+                        original_language={language}
+                        release_date={x.release_date}
+                        overview={x.overview}
+                        backdrop_path={x.backdrop_path}
+                        media_type={x.media_type}
+                        first_actor={{ name: actor[0].name, role: actor }}
+                        secondary_actor={{ name: secondary_actor[0].name, role: secondary_actor }}
+                    />
+                );
+            });
         return (
             <div className="container-fluid">
                 <div className={'main p-3 ' + styles.main}>
